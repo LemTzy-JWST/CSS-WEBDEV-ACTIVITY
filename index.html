@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>School Activities</title>
+  <meta name="description" content="A quiet index of eleven school-activity goals for the year." />
+  <meta name="theme-color" content="#f3eee4" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,520&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3eee4;
+      --surface: #faf7f1;
+      --ink: #1b1916;
+      --muted: #5c5852;
+      --subtle: #7a746c;
+      --primary: #2d4a42;
+      --primary-fg: #f3eee4;
+      --line: #ddd4c6;
+      --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+      --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+      --radius-md: 0.75rem;
+      --radius-lg: 1.25rem;
+      --radius-xl: 1.75rem;
+      --text-display: clamp(2.5rem, 1.4rem + 3.2vw, 3.75rem);
+      --text-title: clamp(1.75rem, 1.2rem + 1.4vw, 2.25rem);
+      --tracking-display: -0.03em;
+      --tracking-caps: 0.2em;
+      --shadow-border: 0 0 0 1px rgba(27, 25, 22, 0.06), 0 1px 2px -1px rgba(27, 25, 22, 0.06), 0 2px 8px 0 rgba(27, 25, 22, 0.04);
+      --shadow-border-hover: 0 0 0 1px rgba(27, 25, 22, 0.1), 0 8px 24px -12px rgba(27, 25, 22, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    html, body { min-height: 100%; margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    a { cursor: pointer; color: inherit; text-decoration: none; }
+    h1, h2 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    img { max-width: 100%; display: block; }
+
+    .page { position: relative; min-height: 100dvh; overflow-x: hidden; }
+    .paper-grid {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0.3;
+      background-image: radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--ink) 10%, transparent) 1px, transparent 0);
+      background-size: 18px 18px;
+    }
+    .wrap {
+      position: relative;
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (min-width: 640px) {
+      .wrap { padding: 2rem; }
+    }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      background: var(--ink);
+      color: var(--surface);
+      border-radius: 0.375rem;
+      padding: 0.5rem 1rem;
+      z-index: 50;
+    }
+    .skip:focus { left: 0.75rem; top: 0.75rem; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .mark {
+      width: 2.5rem; height: 2.5rem;
+      display: grid; place-items: center;
+      background: var(--primary); color: var(--primary-fg);
+      border-radius: var(--radius-md);
+      font-family: var(--font-display);
+      font-size: 0.875rem; line-height: 1;
+    }
+    .brand-name { font-size: 0.875rem; font-weight: 500; letter-spacing: 0.025em; line-height: 1.2; margin: 0; }
+    .brand-sub { font-size: 0.75rem; color: var(--muted); margin: 0.1rem 0 0; }
+    .year {
+      font-size: 0.75rem; font-weight: 500; color: var(--muted);
+      letter-spacing: var(--tracking-caps); text-transform: uppercase;
+    }
+
+    .hero {
+      display: grid; align-items: center; gap: 2rem;
+      padding: 2.5rem 0;
+    }
+    @media (min-width: 1024px) {
+      .hero { grid-template-columns: 1fr 1fr; gap: 3.5rem; padding: 3rem 0; }
+    }
+    .kicker {
+      font-size: 0.75rem; font-weight: 500; color: var(--muted);
+      letter-spacing: var(--tracking-caps); text-transform: uppercase;
+      margin: 0 0 1rem;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-display);
+      letter-spacing: var(--tracking-display);
+      line-height: 1; font-weight: 400; margin: 0;
+    }
+    h1 em {
+      display: block; margin-top: 0.5rem;
+      font-style: italic; color: var(--primary); font-weight: 400;
+    }
+    .lead {
+      margin: 1.25rem 0 0; max-width: 28rem;
+      color: var(--muted); font-size: 1rem; line-height: 1.6;
+    }
+    @media (min-width: 640px) { .lead { font-size: 1.125rem; } }
+
+    figure {
+      margin: 0; background: var(--surface);
+      border-radius: var(--radius-xl); padding: 0.5rem;
+      box-shadow: var(--shadow-border);
+    }
+    figure img {
+      width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+      border-radius: var(--radius-lg);
+    }
+
+    #goals { padding-bottom: 3rem; }
+    .index-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 1rem; margin-bottom: 1.25rem;
+    }
+    .index-head .kicker { margin-bottom: 0.25rem; }
+    h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      letter-spacing: var(--tracking-display);
+      font-weight: 400; margin: 0;
+    }
+    .range { display: none; font-size: 0.875rem; color: var(--subtle); }
+    @media (min-width: 640px) { .range { display: block; } }
+
+    .goal-grid {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; grid-template-columns: 1fr; gap: 0.75rem;
+    }
+    @media (min-width: 640px) { .goal-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .goal-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .goal-card {
+      min-height: 6rem; display: flex; flex-direction: column; justify-content: space-between;
+      background: var(--surface); border-radius: var(--radius-lg); padding: 1rem;
+      box-shadow: var(--shadow-border);
+      transition: box-shadow 150ms ease-out, transform 150ms ease-out;
+    }
+    .goal-card:hover { box-shadow: var(--shadow-border-hover); }
+    .goal-card:active { transform: scale(0.98); }
+    .goal-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .goal-num {
+      font-family: var(--font-display); font-size: 1.125rem; line-height: 1;
+      color: var(--subtle); font-variant-numeric: tabular-nums;
+    }
+    .goal-foot {
+      margin-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    }
+    .goal-label { font-size: 1rem; font-weight: 500; letter-spacing: 0.025em; }
+    .goal-arrow {
+      width: 1.25rem; height: 1.25rem; color: var(--primary);
+      transition: transform 150ms ease-out;
+    }
+    .goal-card:hover .goal-arrow { transform: translate(2px, -2px); }
+
+    footer {
+      display: flex; flex-direction: column; gap: 0.5rem;
+      border-top: 1px solid var(--line); padding: 2rem 0;
+    }
+    footer p { margin: 0; font-size: 0.875rem; line-height: 1.6; }
+    .colophon { color: var(--muted); }
+    .note { color: var(--subtle); max-width: 28rem; }
+    @media (min-width: 640px) {
+      footer { flex-direction: row; align-items: center; justify-content: space-between; }
+      .note { text-align: right; }
+    }
+
+
+    /* Carousel */
+    .carousel-shell {
+      position: relative;
+      margin-top: 1.5rem;
+      padding: 0 3.25rem;
+    }
+
+    .goal-grid {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding: 0.5rem 0.25rem 1rem;
+      overscroll-behavior-x: contain;
+    }
+
+    .goal-grid::-webkit-scrollbar { display: none; }
+
+    .goal-row {
+      flex: 0 0 calc(100% - 0.25rem);
+      scroll-snap-align: start;
+      min-width: 0;
+    }
+
+    @media (min-width: 640px) {
+      .goal-row { flex-basis: calc(50% - 0.5rem); }
+    }
+
+    @media (min-width: 1024px) {
+      .goal-row { flex-basis: calc(33.333% - 0.7rem); }
+    }
+
+    .goal-card {
+      min-height: 10rem;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.75), transparent 55%),
+        var(--surface);
+      border: 1px solid rgba(27,25,22,.07);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-border);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .goal-card::after {
+      content: "";
+      position: absolute;
+      width: 5rem;
+      height: 5rem;
+      right: -1.5rem;
+      bottom: -1.75rem;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--primary) 9%, transparent);
+      transition: transform 220ms ease;
+    }
+
+    .goal-card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--primary) 25%, transparent);
+      box-shadow: var(--shadow-border-hover);
+    }
+
+    .goal-card:hover::after { transform: scale(1.35); }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      z-index: 3;
+      width: 2.5rem;
+      height: 2.5rem;
+      transform: translateY(-50%);
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgba(250,247,241,.92);
+      color: var(--ink);
+      box-shadow: 0 5px 20px rgba(27,25,22,.08);
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .carousel-button:hover {
+      background: var(--primary);
+      color: var(--primary-fg);
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .carousel-button:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
+
+    .carousel-button.prev { left: 0; }
+    .carousel-button.next { right: 0; }
+
+    .carousel-button svg {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      margin-top: .35rem;
+    }
+
+    .carousel-dots {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .carousel-dot {
+      width: .45rem;
+      height: .45rem;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: var(--line);
+      cursor: pointer;
+      transition: width 180ms ease, background 180ms ease;
+    }
+
+    .carousel-dot.active {
+      width: 1.4rem;
+      background: var(--primary);
+    }
+
+    .carousel-count {
+      color: var(--subtle);
+      font-size: .75rem;
+      font-variant-numeric: tabular-nums;
+      min-width: 3.25rem;
+      text-align: center;
+    }
+
+    @media (max-width: 639px) {
+      .carousel-shell { padding: 0 2.5rem; }
+      .carousel-button { width: 2.15rem; height: 2.15rem; }
+      .goal-card { min-height: 9rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .goal-grid { scroll-behavior: auto; }
+      .goal-card, .carousel-button, .carousel-dot { transition: none; }
+    }
+
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .rise-in { animation: rise-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .rise-copy { animation-delay: 60ms; }
+    .rise-figure { animation-delay: 140ms; }
+    .rise-index { animation-delay: 180ms; }
+    .goal-row { animation: rise-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .goal-row:nth-child(1) { animation-delay: 80ms; }
+    .goal-row:nth-child(2) { animation-delay: 120ms; }
+    .goal-row:nth-child(3) { animation-delay: 160ms; }
+    .goal-row:nth-child(4) { animation-delay: 200ms; }
+    .goal-row:nth-child(5) { animation-delay: 240ms; }
+    .goal-row:nth-child(6) { animation-delay: 280ms; }
+    .goal-row:nth-child(7) { animation-delay: 320ms; }
+    .goal-row:nth-child(8) { animation-delay: 360ms; }
+    .goal-row:nth-child(9) { animation-delay: 400ms; }
+    .goal-row:nth-child(10) { animation-delay: 440ms; }
+    .goal-row:nth-child(11) { animation-delay: 480ms; }
+    @media (prefers-reduced-motion: reduce) {
+      .rise-in, .goal-row { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="paper-grid" aria-hidden="true"></div>
+    <a class="skip" href="#goals">Skip to goals</a>
+    <div class="wrap">
+      <header class="rise-in">
+        <div class="brand">
+          <span class="mark">11</span>
+          <div>
+            <p class="brand-name">Lemmuel Arroyo</p>
+            <p class="brand-sub">Webdev101 Css activities</p>
+          </div>
+        </div>
+        <p class="year">2026–27</p>
+      </header>
+
+      <main>
+       <h1>MY Eleven Css Goals.</h1>
+        <section id="goals">
+          <div class="index-head rise-in rise-index">
+            <div>
+              <p class="kicker"></p>
+              <h2>The eleven</h2>
+            </div>
+            <p class="range">01 — 11</p>
+          </div>
+          <div class="carousel-shell" aria-label="Goals carousel">
+            <button class="carousel-button prev" type="button" aria-label="Previous goals">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+            </button>
+            <ul class="goal-grid">
+          <li class="goal-row">
+            <a href="Goal_1CSS/index.html" class="goal-card">
+              <span class="goal-num">01</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 1</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_2CSS/goal2.html" class="goal-card">
+              <span class="goal-num">02</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 2</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal3.html" class="goal-card">
+              <span class="goal-num">03</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 3</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_4CSS/goal_4.html" class="goal-card">
+              <span class="goal-num">04</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 4</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_5CSS/Goal_5.html" class="goal-card">
+              <span class="goal-num">05</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 5</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_6CSS/Goal_6.html" class="goal-card">
+              <span class="goal-num">06</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 6</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_7CSS/index.html" class="goal-card">
+              <span class="goal-num">07</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 7</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_8CSS/Goal_8.html" class="goal-card">
+              <span class="goal-num">08</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 8</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_9/Goal_9.html" class="goal-card">
+              <span class="goal-num">09</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 9</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="Goal_10/Goal_10.html" class="goal-card">
+              <span class="goal-num">10</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 10</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="goal-row">
+            <a href="goal11/goal_11.html" class="goal-card">
+              <span class="goal-num">11</span>
+              <span class="goal-foot">
+                <span class="goal-label">GOAL 11</span>
+                <svg class="goal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </li>
+            </ul>
+            <button class="carousel-button next" type="button" aria-label="Next goals">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </button>
+            <div class="carousel-controls">
+              <div class="carousel-dots" aria-label="Choose goal group"></div>
+              <span class="carousel-count" aria-live="polite">01 / 11</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll(".goal-card").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        var href = link.getAttribute("href");
+        if (!href) event.preventDefault();
+      });
+    });
+
+    // Lightweight, dependency-free carousel
+    (function () {
+      var track = document.querySelector(".goal-grid");
+      var cards = Array.from(document.querySelectorAll(".goal-row"));
+      var prev = document.querySelector(".carousel-button.prev");
+      var next = document.querySelector(".carousel-button.next");
+      var dotsWrap = document.querySelector(".carousel-dots");
+      var count = document.querySelector(".carousel-count");
+
+      if (!track || !cards.length) return;
+
+      function visibleCards() {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 640) return 2;
+        return 1;
+      }
+
+      function step() {
+        var card = cards[0];
+        if (!card) return 0;
+        var gap = parseFloat(getComputedStyle(track).gap) || 0;
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      function maxIndex() {
+        return Math.max(0, cards.length - visibleCards());
+      }
+
+      function currentIndex() {
+        return Math.min(maxIndex(), Math.max(0, Math.round(track.scrollLeft / step())));
+      }
+
+      function update() {
+        var index = currentIndex();
+        prev.disabled = index <= 0;
+        next.disabled = index >= maxIndex();
+
+        count.textContent =
+          String(index + 1).padStart(2, "0") + " / " +
+          String(cards.length).padStart(2, "0");
+
+        Array.from(dotsWrap.children).forEach(function (dot, i) {
+          dot.classList.toggle("active", i === index);
+          dot.setAttribute("aria-current", i === index ? "true" : "false");
+        });
+      }
+
+      function buildDots() {
+        dotsWrap.innerHTML = "";
+        var total = maxIndex() + 1;
+
+        for (var i = 0; i < total; i++) {
+          var dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "carousel-dot";
+          dot.setAttribute("aria-label", "Go to goal " + (i + 1));
+          dot.addEventListener("click", function () {
+            var target = Number(this.dataset.index);
+            track.scrollTo({ left: target * step(), behavior: "smooth" });
+          });
+          dot.dataset.index = i;
+          dotsWrap.appendChild(dot);
+        }
+      }
+
+      prev.addEventListener("click", function () {
+        track.scrollBy({ left: -step(), behavior: "smooth" });
+      });
+
+      next.addEventListener("click", function () {
+        track.scrollBy({ left: step(), behavior: "smooth" });
+      });
+
+      track.addEventListener("scroll", update, { passive: true });
+
+      window.addEventListener("resize", function () {
+        buildDots();
+        update();
+      });
+
+      buildDots();
+      update();
+    })();
+  </script>
+</body>
+</html>
