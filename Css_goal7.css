@@ -1,0 +1,30 @@
+/* style.css */
+
+h1,
+h2 {
+  color: blueviolet;
+}
+
+/* "Do these things today!" */
+.box p.done{
+  color: firebrick;
+}
+
+ul li:nth-child(1) {
+  color: blue;
+}
+
+ul li:nth-child(2),
+ul li:nth-child(3) {
+  color: green;
+}
+
+
+
+body > ul p.done {
+  color: black;
+}
+
+p:last-of-type {
+  color: black;
+}
